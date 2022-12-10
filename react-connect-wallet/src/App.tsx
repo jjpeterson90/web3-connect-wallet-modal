@@ -7,44 +7,28 @@ function App() {
   const [walletAddress, setWalletAddress] = useState('');
   const mounted = useRef(false);
 
-  // initiate provider connection
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      window.web3 = new Web3(Web3.givenProvider || 'ws://localhost:8545');
-    }
-  });
-
-  const getAccounts = async () => {
-    const accounts = await window.ethereum.request({
-      method: 'eth_accounts',
-    });
-    return accounts;
-  };
-
-  // Watch for wallet connect/disconnect events
-  useEffect(() => {
-    window.ethereum.on('accountsChanged', async (): Promise<any> => {
-      const accounts = await getAccounts();
-      if (accounts && accounts.length > 0) {
-        setWalletAddress(accounts[0]);
-      } else {
-        setWalletAddress('');
-      }
-    });
-  });
-
-  useEffect(() => {
-    const update = async () => {
-      const accounts = await getAccounts();
-      setWalletAddress(accounts[0]);
-    };
-    update();
-  });
-
   const updateAddress = (address: string) => {
     setWalletAddress(address);
   };
+
+  // initiates provider connection and sets up a listener to detect wallet address changes
+  const initWeb3 = async () => {
+    window.web3 = new Web3(Web3.givenProvider);
+    window.web3.eth.currentProvider.on('accountsChanged', async () => {
+      if (window.web3.eth) {
+        const accounts = await window.web3.eth.getAccounts();
+        updateAddress(accounts[0]);
+      }
+    });
+  };
+
+  // initiate provider connection on mount
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      initWeb3();
+    }
+  });
 
   return (
     <div className="App">

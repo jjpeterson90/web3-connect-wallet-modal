@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 // import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import MetamaskButton from './metamask/MetamaskButton';
-import WalletConnectButton from './walletconnect/WalletConnectButton';
+import MetamaskButton from '../wallets/metamask/MetamaskButton';
+import WalletConnectButton from '../wallets/walletconnect/WalletConnectButton';
 
 interface Props {
   updateAddress: (address: string) => void;
@@ -96,11 +96,7 @@ export default function ConnectWalletModal({
                         />
                       </div>
                       <div className="h-20 w-56">
-                        <WalletConnectButton
-                          updateAddress={updateAddress}
-                          walletAddress={walletAddress}
-                          closeModal={closeModal}
-                        />
+                        <WalletConnectButton />
                       </div>
                     </div>
                   </div>

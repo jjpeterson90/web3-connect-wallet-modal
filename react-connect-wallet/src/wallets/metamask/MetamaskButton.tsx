@@ -15,7 +15,7 @@ export default function MetamaskButton({
 
   const connect = async () => {
     closeModal();
-    if (window.web3.currentProvider.isMetaMask) {
+    if (window.web3.eth.currentProvider.isMetaMask) {
       const accounts = await window.web3.eth.requestAccounts();
       if (accounts && accounts.length > 0) {
         updateAddress(accounts[0]);
@@ -26,11 +26,7 @@ export default function MetamaskButton({
   };
 
   useEffect(() => {
-    if (walletAddress) {
-      setIsDisabled(true);
-    } else {
-      setIsDisabled(false);
-    }
+    setIsDisabled(!!walletAddress);
   }, [walletAddress]);
 
   return (
