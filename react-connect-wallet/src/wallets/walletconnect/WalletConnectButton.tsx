@@ -2,12 +2,11 @@ import React from 'react';
 import SignClient from '@walletconnect/sign-client';
 import QRCodeModal from '@walletconnect/qrcode-modal';
 
-const WALLETCONNECT_PROJECT_ID = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID;
-console.log(WALLETCONNECT_PROJECT_ID);
+// const WALLETCONNECT_PROJECT_ID = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID;
 
-const signClient = await SignClient.init({
-  projectId: WALLETCONNECT_PROJECT_ID,
-});
+// const signClient = await SignClient.init({
+//   projectId: WALLETCONNECT_PROJECT_ID,
+// });
 
 export default function WalletConnectButton() {
   const handleClick = async () => {
