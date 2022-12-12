@@ -26,5 +26,6 @@ module.exports = {
     'no-nested-ternary': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    // 'import/extensions': 'never',
   },
 };

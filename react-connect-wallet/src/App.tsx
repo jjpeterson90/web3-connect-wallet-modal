@@ -11,7 +11,12 @@ function App() {
     setWalletAddress(address);
   };
 
-  // initiates provider connection and sets up a listener to detect wallet address changes
+  const updateAccounts = async () => {
+    const accounts = await window.web3.eth.getAccounts();
+    updateAddress(accounts[0] || '');
+  };
+
+  // Connect to given provider
   const initWeb3 = async () => {
     window.web3 = new Web3(Web3.givenProvider);
     window.web3.eth.currentProvider.on('accountsChanged', async () => {
@@ -22,7 +27,14 @@ function App() {
     });
   };
 
-  // initiate provider connection on mount
+  // Auto-connect if previously connected
+  useEffect(() => {
+    if (window.web3.eth) {
+      updateAccounts();
+    }
+  });
+
+  // Initiate provider connection on mount
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
